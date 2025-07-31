@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+behavex = "4.4.0"
+requests = "2.31.0"
+pre-commit = "3.5.0"
+seleniumadblock = {git = "https://github.com/sandrocods/SeleniumAdblock.git"}
+selenium = "==4.15.0"
+webdriver-manager = "==4.0.2"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"

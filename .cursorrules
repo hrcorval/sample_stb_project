@@ -1,0 +1,73 @@
+# Test Automation Framework Rules for Python Behave
+
+## Framework Standards
+
+### Code Style and Structure
+- Follow PEP 8 guidelines for Python code style
+- Use meaningful variable and function names (snake_case for variables and functions, PascalCase for classes)
+- Keep functions small and focused on a single task
+- Use docstrings for modules, classes, and functions
+- Organize code into logical modules and packages
+- Use virtual environments for project isolation
+
+### Python-specific Conventions
+- Prefer list comprehensions and generator expressions over map() and filter()
+- Use context managers (with statements) for resource management
+- Utilize decorators for cross-cutting concerns (e.g., logging, timing)
+- Leverage type hints for improved code readability and tooling support
+- Use f-strings for string formatting
+
+### Framework Main Libraries
+- Use the requests library for interacting with APIs
+- Use Selenium for browser automation
+- Use Behave for behavior-driven development
+- Use Behavex for parallel test executions
+- Utilize dependency injection for clean, testable code
+- Implement RESTful API design principles
+
+### Test Automation General Guidelines
+- Implement the Page Object Pattern for UI test automation
+- Maintain Selenium code exclusively within page objects, not in step definitions
+- Register new steps in the appropriate step definition file whenever adding them to feature files
+- Store automated test scenarios in the 'features/automated' directory and manual test scenarios in the 'features/manual' directory
+- Organize automated test steps in the 'features/steps/api' and 'features/steps/pages' directories
+- Request notification of required framework steps when beginning test automation
+- Note that multiple step definitions may be associated with a single method; consider all variations during analysis
+
+### Test Scenario Design
+- Include appropriate TAGs for all scenarios
+- Prioritize the use of existing steps over creating new ones
+- Assign a feature-specific TAG to each test scenario
+- Document any new steps required for framework implementation
+- Implement cleanup procedures for scenarios that create data
+- Treat quoted text as variables to maintain step reusability
+- Place automated scenarios in 'features/automated' and manual scenarios in 'features/manual'
+- Apply the @MANUAL tag to all manual test scenarios
+- Include the @NON_PRODUCTION tag for data-modifying tests
+
+### Test Step Design
+- Prioritize existing steps when making suggestions
+- Document new steps in the appropriate step definition file
+- Verify successful completion of dialog or page navigation actions
+- Organize test steps into modules representing specific pages or application sections
+- Store steps in the 'steps' directory, with API-related steps in the 'steps/api' subdirectory
+- Consider all step definitions linked to a method via the @step decorator during analysis
+
+### Test Data
+- Avoid hardcoded data in test step implementations
+- Source specific values from configuration files rather than embedding them in code
+
+### Error Handling and Logging
+- Implement specific exception handlers instead of using generic Exception classes
+- Define custom exception classes for application-specific error scenarios
+- Format log messages to facilitate parsing and analysis
+
+### Version Control
+- Use Git for version control
+- Implement feature branching and pull request workflows
+- Write meaningful commit messages
+- Use pre-commit hooks to run linting and formatting before committing
+
+### Dependencies Management
+- Use Pipfile for managing project dependencies
+- Keep dependencies minimal and well-documented 
