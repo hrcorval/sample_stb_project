@@ -16,7 +16,7 @@ output/
 slack/
 output*
 !output/
-!config/
+config/config.cfg
 !.output
 performance_output/
 eggs/
