@@ -12,16 +12,16 @@ Feature: Product Browse & Adding to Cart
   Scenario: Add two different products to cart
     Given I remove all the products from the shopping cart if it is not empty
     And I select the "Women - Tops - Jackets" product category
-    And I select the 1st product
-    And I configure product options if needed
+    And I select the 1st item from the listed products
+    And I configure product options with the following data:
       | size | color | quantity |
       | M    | Any   | 1        |
     And I add the product to cart
     Then I should see a success message
     And the cart counter should be updated
     When I select the "Women - Bottoms - Pants" product category
-    And I select the 2nd product
-    And I configure product options if needed
+    And I select the 2nd item from the listed products
+    And I configure product options with the following data:
       | size | color | quantity |
       | Any  | Any   | 1        |
     And I add the product to cart
@@ -32,14 +32,14 @@ Feature: Product Browse & Adding to Cart
   Scenario: Verify shopping cart contents
     Given I remove all the products from the shopping cart if it is not empty
     And I select the "Women - Tops - Jackets" product category
-    And I select the 1st product
-    And I configure product options if needed
+    And I select the 1st item from the listed products
+    And I configure product options with the following data:
       | size | color | quantity |
       | M    | Any   | 1        |
     And I add the product to cart
     When I select the "Women - Bottoms - Pants" product category
-    And I select the 2nd product
-    And I configure product options if needed
+    And I select the 2nd item from the listed products
+    And I configure product options with the following data:
       | size | color | quantity |
       | Any  | Any   | 1        |
     And I add the product to cart

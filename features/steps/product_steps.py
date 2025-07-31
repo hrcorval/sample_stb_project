@@ -11,7 +11,7 @@ from features.steps.pages.base_page import BasePage
 from features.steps.pages.web_utils import retry, wait_and_close_adds_popups
 
 
-@step('I am on the homepage')
+@step('I open the homepage')
 def step_given_on_homepage(context):
     """Navigate to homepage and set as current page"""
     context.current_page = HP(context.browser.driver)
@@ -26,10 +26,10 @@ def step_when_navigate_to_product_listing(context):
     context.current_page = home_page.open_product_page()
 
 
-@step('I select the {elem_index:d}st product')
-@step('I select the {elem_index:d}nd product')
-@step('I select the {elem_index:d}rd product')
-@step('I select the {elem_index:d}th product')
+@step('I select the {elem_index:d}st item from the listed products')
+@step('I select the {elem_index:d}nd item from the listed products')
+@step('I select the {elem_index:d}rd item from the listed products')
+@step('I select the {elem_index:d}th item from the listed products')
 @retry()
 def step_when_select_a_product_by_index(context, elem_index):
     """Select product by ordinal index (1st, 2nd, 3rd, etc.)"""
@@ -41,11 +41,9 @@ def step_when_select_a_product_by_index(context, elem_index):
 @step('I select the "{categories}" product category')
 @step('I select the "{categories}" product categories')
 @retry()
-def step_when_select_a_category(context, categories, is_retry=False):
+def step_when_select_a_category(context, categories):
     """Select category"""
     current_page: BasePage = context.current_page
-    if is_retry:
-        wait_and_close_adds_popups(context.browser.driver)
     categories_list = categories.split(" - ")
     retries = 2
     for _ in range(retries):
@@ -54,7 +52,7 @@ def step_when_select_a_category(context, categories, is_retry=False):
             break
     context.current_page = product_page
 
-@step('I configure product options if needed')
+@step('I configure product options with the following data')
 @retry()
 def step_when_configure_product_options(context):
     """Configure product options"""
@@ -84,6 +82,7 @@ def step_when_add_product_to_cart(context):
         context.products_added_to_cart = []
     product_page: PP = context.current_page
     product_data = product_page.add_product_to_cart()
+    logging.info(f"The following product was added to cart: {product_data}")
     context.products_added_to_cart.append(product_data)
 
 

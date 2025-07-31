@@ -38,7 +38,7 @@ def before_scenario(context, scenario):
     # Set up browser with comprehensive ad blocking
     chrome_options = SeleniumAdblock.SeleniumAdblock()._startAdBlock()
     # chrome_options = ChromeOptions()
-    # chrome_options.add_argument("--headless")  # Run in headless mode
+    chrome_options.add_argument("--headless")  # Run in headless mode
     
     # Basic browser options
     chrome_options.add_argument("--no-sandbox")
@@ -54,7 +54,7 @@ def before_step(context, step):
     """before_step behave hook"""
     logging.info("-"*40)
     logging.info("STEP: {}".format(step.name))
-    if "browser" in context:
+    if "browser" in context and "#google_vignette" in context.browser.driver.current_url:
         wait_and_close_adds_popups(context.browser.driver)
 
 def after_step(context, step):

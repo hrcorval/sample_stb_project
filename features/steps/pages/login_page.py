@@ -5,7 +5,6 @@ import logging
 from selenium.webdriver.common.by import By
 from features.steps.pages.base_page import BasePage
 
-
 class LoginPage(BasePage):
     """Login page object model for Magento"""
     

@@ -13,6 +13,7 @@ def step_then_cart_counter_updated(context):
     """Verify cart counter is updated"""
     if hasattr(context.current_page, 'get_cart_counter'):
         cart_count = context.current_page.get_cart_counter()
+        logging.info(f"Cart counter is updated to {cart_count}")
         assert cart_count > 0, "Cart counter was not updated"
     else:
         raise AssertionError(f"Current page {type(context.current_page).__name__} does not support cart counter")
@@ -23,6 +24,7 @@ def step_then_cart_counter_shows_count(context, count):
     """Verify specific cart count"""
     expected_count = int(count)
     cart_count = context.current_page.get_cart_counter()
+    logging.info(f"Cart counter shows {cart_count}, expected {expected_count}")
     assert cart_count == expected_count, f"Cart counter shows {cart_count}, expected {expected_count}"
 
 
@@ -46,6 +48,7 @@ def step_then_see_correct_totals(context):
     cart_page: CP = context.current_page
     cart_subtotal_amount = float(cart_page.get_cart_summary()['subtotal'].replace("$", ""))
     sum_of_product_prices = sum(float(product['price'].replace("$", "")) * product['quantity'] for product in context.products_added_to_cart)
+    logging.info(f"Cart subtotal amount {cart_subtotal_amount}, sum of product prices {sum_of_product_prices}")
     assert cart_subtotal_amount == sum_of_product_prices, f"Cart subtotal amount {cart_subtotal_amount} does not match sum of product prices {sum_of_product_prices}"
 
 

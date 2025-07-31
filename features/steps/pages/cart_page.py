@@ -29,7 +29,7 @@ class CartPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         wait = WebDriverWait(self.driver, 5)
-        wait.until(EC.url_contains('/checkout/'))        
+        wait.until(EC.url_contains('/cart/'))        
     
     def get_cart_items(self):
         """Get list of items in the cart"""

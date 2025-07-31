@@ -2,12 +2,13 @@
 Checkout step definitions - Core Requirements Only
 """
 import time
+import logging
 from behave import step, then
 from features.steps.pages.checkout_page import CheckoutPage as CHP
 from features.steps.pages.cart_page import CartPage as CP
 
 
-@step('I am on the shopping cart page')
+@step('I open the shopping cart page')
 def step_given_on_cart_page(context):
     """Navigate to shopping cart page"""
     # Assume we're coming from a product page
@@ -26,13 +27,25 @@ def step_when_proceed_to_checkout(context):
     context.current_page = cart_page.proceed_to_checkout()
     time.sleep(3)
 
-
-@step('I fill out all required shipping information with dummy data if no address is already filled')
+@step('I fill out all required shipping information if not already set')
 def step_when_fill_shipping_info_dummy(context):
     """Fill shipping information with dummy data from config"""
     checkout_page: CHP = context.current_page
     if not checkout_page.is_address_already_filled():
-        checkout_page.fill_shipping_information()
+        # Get all configuration data
+        first_name = checkout_page.config.get('checkout_data', 'first_name')
+        last_name = checkout_page.config.get('checkout_data', 'last_name')
+        street_address = checkout_page.config.get('checkout_data', 'street_address')
+        city = checkout_page.config.get('checkout_data', 'city')
+        postal_code = checkout_page.config.get('checkout_data', 'postal_code')
+        phone_number = checkout_page.config.get('checkout_data', 'phone_number')
+        
+        # Pass all data as arguments to the method
+        checkout_page.fill_shipping_information(
+            first_name, last_name, street_address, city, postal_code, phone_number
+        )
+    else:
+        logging.info("Shipping information is already set. so the default shipping address will be used.")
 
 
 @step('I select a shipping method')

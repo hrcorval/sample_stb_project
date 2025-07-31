@@ -5,7 +5,8 @@ import logging
 import time
 from selenium.webdriver.common.by import By
 from features.steps.pages.base_page import BasePage
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class CheckoutPage(BasePage):
     """Checkout page object model"""
@@ -41,6 +42,8 @@ class CheckoutPage(BasePage):
     
     def __init__(self, driver):
         super().__init__(driver)
+        wait = WebDriverWait(self.driver, 5)
+        wait.until(EC.url_contains('/checkout/'))        
     
     def is_address_already_filled(self):
         """Check if address is already filled"""
@@ -50,46 +53,62 @@ class CheckoutPage(BasePage):
         except:
             return False
 
-    def fill_shipping_information(self):
-        """Fill out shipping information form with config data"""
-        # Fill first name
+    def fill_shipping_information(self, first_name, last_name, street_address, city, postal_code, phone_number):
+        """Fill out shipping information form with provided data"""
+        # Fill each field using individual methods
+        self.fill_first_name(first_name)
+        self.fill_last_name(last_name)
+        self.fill_street_address(street_address)
+        self.fill_city(city)
+        self.fill_state()
+        self.fill_postal_code(postal_code)
+        self.fill_phone_number(phone_number)
+        
+        time.sleep(2)  # Allow form to process
+    
+    def fill_first_name(self, first_name):
+        """Fill the first name field"""
         first_name_element = self.web_utils.find_element(*self.first_name_field)
         first_name_element.clear()
-        first_name_element.send_keys(self.config.get('checkout_data', 'first_name'))
-        
-        # Fill last name
+        first_name_element.send_keys(first_name)
+    
+    def fill_last_name(self, last_name):
+        """Fill the last name field"""
         last_name_element = self.web_utils.find_element(*self.last_name_field)
         last_name_element.clear()
-        last_name_element.send_keys(self.config.get('checkout_data', 'last_name'))
-        
-        # Fill street address
+        last_name_element.send_keys(last_name)
+    
+    def fill_street_address(self, street_address):
+        """Fill the street address field"""
         street_element = self.web_utils.find_element(*self.street_address_field)
         street_element.clear()
-        street_element.send_keys(self.config.get('checkout_data', 'street_address'))
-        
-        # Fill city
+        street_element.send_keys(street_address)
+    
+    def fill_city(self, city):
+        """Fill the city field"""
         city_element = self.web_utils.find_element(*self.city_field)
         city_element.clear()
-        city_element.send_keys(self.config.get('checkout_data', 'city'))
-        
-        # Select state
+        city_element.send_keys(city)
+    
+    def fill_state(self):
+        """Select the first available state from dropdown"""
         state_element = self.web_utils.find_element(*self.state_field)
         state_element.click()
         state_dropdown = self.web_utils.find_elements(*self.state_dropdown, retries=5)
         if state_dropdown:
             self.web_utils.safe_click(state_dropdown[0])
-        
-        # Fill postal code
+    
+    def fill_postal_code(self, postal_code):
+        """Fill the postal code field"""
         postal_element = self.web_utils.find_element(*self.postal_code_field)
         postal_element.clear()
-        postal_element.send_keys(self.config.get('checkout_data', 'postal_code'))
-        
-        # Fill phone number
+        postal_element.send_keys(postal_code)
+    
+    def fill_phone_number(self, phone_number):
+        """Fill the phone number field"""
         phone_element = self.web_utils.find_element(*self.phone_field)
         phone_element.clear()
-        phone_element.send_keys(self.config.get('checkout_data', 'phone_number'))
-        
-        time.sleep(2)  # Allow form to process
+        phone_element.send_keys(phone_number)
     
     def select_shipping_method(self):
         """Select first available shipping method"""

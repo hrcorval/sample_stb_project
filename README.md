@@ -20,7 +20,7 @@ behavex
 behavex features/login.feature
 
 # Run with tags
-behavex --tags=@MANUAL
+behavex --tags=@CHECKOUT
 
 # Run tests in parallel
 behavex --parallel-processes=4
@@ -29,7 +29,7 @@ behavex --parallel-processes=4
 behavex --output=output
 ```
 
-## Project Structure
+## Sample Project Structure
 
 ```
 ├── features/
